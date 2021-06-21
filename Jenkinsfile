@@ -8,6 +8,11 @@ node {
     }
 
     stage('Build image') {
+      
+      docker.withRegistry('https://docker.mycorp.com/', 'dockerhub') {
+        git '…'
+    //    docker.build('myapp').push('latest')
+    //}
   
        app = docker.build("jansuar/test")
     }
