@@ -15,8 +15,9 @@ node {
     //}
   
        app = docker.build("jansuar/test")
+      }
     }
-
+  
     stage('Test image') {
   
 
