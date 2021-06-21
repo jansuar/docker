@@ -9,13 +9,13 @@ node {
 
     stage('Build image') {
       
-      docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
+      //docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
      //   git '…'
     //    docker.build('myapp').push('latest')
     //}
   
        app = docker.build("jansuar/test")
-      }
+      //}
     }
   
     stage('Test image') {
