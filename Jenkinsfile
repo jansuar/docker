@@ -9,7 +9,7 @@ node {
 
     stage('Build image') {
       
-      docker.withRegistry('https://docker.mycorp.com/', 'dockerhub') {
+      docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
      //   git '…'
     //    docker.build('myapp').push('latest')
     //}
