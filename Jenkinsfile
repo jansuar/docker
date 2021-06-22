@@ -10,48 +10,48 @@ node {
     def IMAGE='test1'
     // }
 
-    withCredentials([usernamePassword(credentialsId: $ACR_CRED_ID, usernameVariable: 'ACR_USER', passwordVariable: 'ACR_PASSWORD')]{
-
-      stage('Clone repository') {      
+    stage('Clone repository') {      
 
         checkout scm
-      }
+    }
 
-      stage('Build image') {
+    stage('Build image') {
+      // steps {
 
         echo 'DOCKER BUILD'
         sh 'whoami'
         sh 'pwd'
 
-        sh 'docker login -u $ACR_USER -p $ACR_PASSWORD https://$ACR_SERVER'
-        // build image
-        def imageWithTag = "$ACR_SERVER/$IMAGE:$env.BUILD_NUMBER"
-        app = docker.build imageWithTag
+        // withCredentials([usernamePassword(credentialsId: $ACR_CRED_ID, usernameVariable: 'ACR_USER', passwordVariable: 'ACR_PASSWORD')]{
+          sh 'docker login -u $ACR_USER -p $ACR_PASSWORD https://$ACR_SERVER'
+          // build image
+          def imageWithTag = "$ACR_SERVER/$IMAGE:$env.BUILD_NUMBER"
+          app = docker.build imageWithTag
 
-        //app = docker.build("jansuar/test")
+          //app = docker.build("jansuar/test")
 
-        //docker.build("${ecRegistry}/${image}:${imageTag}", "${dockerFile}")
+          //docker.build("${ecRegistry}/${image}:${imageTag}", "${dockerFile}")
 
-        sh 'docker images'
+          sh 'docker images'
         // }
-    
-      }
-    
-      stage('Test image') {
+      // }
+  
+    }
+  
+    stage('Test image') {
 
-        app.inside {
-            sh 'echo "Tests passed"'
-        }
-      }
-
-      stage('Push image') {
-        echo 'DOCKER PUSH'
-
-        docker.withRegistry ("https://${ACR_SERVER}", "$ACR_CRED_ID") {
-
-          app.push("${env.BUILD_NUMBER}")
-          app.push("latest")
-        }
+      app.inside {
+          sh 'echo "Tests passed"'
       }
     }
-  }
+
+    stage('Push image') {
+      echo 'DOCKER PUSH'
+
+      docker.withRegistry ("https://${ACR_SERVER}", "$ACR_CRED_ID") {
+
+        app.push("${env.BUILD_NUMBER}")
+        app.push("latest")
+      }
+    }
+}
