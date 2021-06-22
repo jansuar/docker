@@ -32,7 +32,7 @@ node {
         //docker.build("${ecRegistry}/${image}:${imageTag}", "${dockerFile}")
 
         sh 'docker images'
-      }
+      // }
   
     }
   
