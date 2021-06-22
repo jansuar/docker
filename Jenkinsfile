@@ -31,6 +31,6 @@ node {
       //  docker.withRegistry('', 'dockerhub') {
             app.push("${env.BUILD_NUMBER}")
             app.push("latest")
-        }
+        // }
     }
 }
