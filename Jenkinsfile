@@ -1,43 +1,3 @@
-// node {
-//     def app
-
-//     stage('Clone repository') {
-      
-
-//         checkout scm
-//     }
-
-//     stage('Build image') {
-      
-//       //docker.withRegistry('https://registry.hub.docker.com', 'dockerhub') {
-//      //   git '…'
-//     //    docker.build('myapp').push('latest')
-//     //}
-  
-//        app = docker.build("jansuar/test")
-//       //}
-//     }
-  
-//     stage('Test image') {
-  
-
-//         app.inside {
-//             sh 'echo "Tests passed"'
-//         }
-//     }
-
-//     stage('Push image') {
-        
-//         docker.withRegistry('', 'dockerhub') {
-//             app.push("${env.BUILD_NUMBER}")
-//             app.push("latest")
-//         }
-//     }
-// }
-
-
-
-
 node {
     def app
 
@@ -50,8 +10,7 @@ node {
     def IMAGE='test1'
     // }
 
-    stage('Clone repository') {
-      
+    stage('Clone repository') {      
 
         checkout scm
     }
@@ -75,15 +34,13 @@ node {
         sh 'docker images'
       }
   
-
     }
   
     stage('Test image') {
-  
 
-        app.inside {
-            sh 'echo "Tests passed"'
-        }
+      app.inside {
+          sh 'echo "Tests passed"'
+      }
     }
 
     stage('Push image') {
